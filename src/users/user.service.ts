@@ -18,6 +18,10 @@ export class UserService {
     });
   }
 
+  async list() {
+    return this.prisma.user.findMany();
+  }
+
   async exists(id: string) {
     if (
       !(await this.prisma.user.count({
