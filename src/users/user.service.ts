@@ -22,6 +22,10 @@ export class UserService {
     return this.prisma.user.findMany();
   }
 
+  async show(id: string) {
+    return this.prisma.user.findUnique({ where: { id } });
+  }
+
   async exists(id: string) {
     if (
       !(await this.prisma.user.count({
