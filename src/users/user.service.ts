@@ -61,6 +61,20 @@ export class UserService {
     });
   }
 
+  async delete(id: string) {
+    const user = await this.show(id);
+
+    if (!user) {
+      throw new NotFoundException(`User ${id} not found`);
+    }
+
+    return this.prisma.user.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
   async exists(id: string) {
     if (
       !(await this.prisma.user.count({
