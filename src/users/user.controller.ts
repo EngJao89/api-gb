@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, Put } from "@nestjs/common";
 
 import { UserService } from "./user.service";
 import { CreateUserDTO } from "./dto/create-user.dto";
 
 import { ParamId } from 'src/decorators/param-id.decorator';
+import { UpdatePutUserDTO } from "./dto/update-put-user.dto";
 
 @Controller('users')
 export class UserController {
@@ -22,5 +23,10 @@ export class UserController {
   @Get(':id')
   async readOne(@ParamId() id: string) {
     return this.userService.show(id);
+  }
+
+  @Put(':id')
+  async update(@Body() data: UpdatePutUserDTO, @ParamId() id: string) {
+    return this.userService.update(id, data);
   }
 }
