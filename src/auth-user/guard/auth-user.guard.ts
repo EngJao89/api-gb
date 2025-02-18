@@ -8,7 +8,7 @@ import { AuthUserService } from '../auth-user.service';
 import { UserService } from 'src/users/user.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthUserGuard implements CanActivate {
   constructor(
     private readonly authUserService: AuthUserService,
     private readonly userService: UserService,
