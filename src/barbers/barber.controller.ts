@@ -1,4 +1,9 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { 
+  Body, 
+  Controller, 
+  Get, 
+  Post 
+} from "@nestjs/common";
 
 import { BarberService } from "./barber.service";
 import { CreateUserDTO } from "src/users/dto/create-user.dto";
@@ -10,5 +15,10 @@ export class BarberController {
   @Post()
   async create(@Body() data: CreateUserDTO) {
     return this.barberService.create(data);
+  }
+
+  @Get()
+  async read() {
+    return this.barberService.list();
   }
 }
