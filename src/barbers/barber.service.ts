@@ -13,8 +13,12 @@ export class BarberService {
   
     data.password = await bcrypt.hash(data.password, salt);
   
-    return this.prisma.user.create({
+    return this.prisma.barber.create({
       data,
     });
+  }
+
+  async list() {
+    return this.prisma.barber.findMany();
   }
 }
