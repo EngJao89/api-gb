@@ -20,3 +20,13 @@ model User {
 
   @@map("users")
 }
+
+model Barber {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  phone         String   @unique
+  password      String
+
+  @@map("barbers")
+}
