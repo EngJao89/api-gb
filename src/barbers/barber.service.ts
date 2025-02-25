@@ -21,4 +21,8 @@ export class BarberService {
   async list() {
     return this.prisma.barber.findMany();
   }
+
+  async show(id: string) {
+    return this.prisma.barber.findUnique({ where: { id } });
+  }
 }
