@@ -1,8 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import * as bcrypt from 'bcrypt';
 
 import { PrismaService } from "src/lib/prisma.service";
 import { CreateUserDTO } from "src/users/dto/create-user.dto";
+import { UpdatePutBarberDTO } from "./dto/update-put-barber.dto";
 
 @Injectable()
 export class BarberService {
@@ -24,5 +25,31 @@ export class BarberService {
 
   async show(id: string) {
     return this.prisma.barber.findUnique({ where: { id } });
+  }
+
+  async update(id: string, data: UpdatePutBarberDTO) {
+    await this.exists(id);
+
+    if (data.password) {
+      const salt = await bcrypt.genSalt();
+      data.password = await bcrypt.hash(data.password, salt);
+    }
+
+    return this.prisma.barber.update({
+      data,
+      where: {
+        id,
+      },
+    });
+  }
+
+  async exists(id: string) {
+    if (
+      !(await this.prisma.barber.count({
+        where: { id },
+      }))
+    ) {
+      throw new NotFoundException(`User ${id} not found`);
+    }
   }
 }
