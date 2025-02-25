@@ -2,14 +2,17 @@ import {
   Body, 
   Controller, 
   Get, 
+  Patch, 
   Post, 
   Put
 } from "@nestjs/common";
 
-import { ParamId } from "src/decorators/param-id.decorator";
 import { BarberService } from "./barber.service";
+import { ParamId } from "src/decorators/param-id.decorator";
+
 import { CreateUserDTO } from "src/users/dto/create-user.dto";
 import { UpdatePutBarberDTO } from "./dto/update-put-barber.dto";
+import { UpdatePatchBarberDTO } from "./dto/update-patch-barber.dto";
 
 @Controller('barbers')
 export class BarberController {
@@ -33,5 +36,10 @@ export class BarberController {
   @Put(':id')
   async update(@Body() data: UpdatePutBarberDTO, @ParamId() id: string) {
     return this.barberService.update(id, data);
+  }
+
+  @Patch(':id')
+  async updatePartial(@Body() data: UpdatePatchBarberDTO, @ParamId() id: string) {
+    return this.barberService.updatePartial(id, data);
   }
 }
