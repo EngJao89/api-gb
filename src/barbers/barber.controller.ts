@@ -5,6 +5,7 @@ import {
   Post 
 } from "@nestjs/common";
 
+import { ParamId } from "src/decorators/param-id.decorator";
 import { BarberService } from "./barber.service";
 import { CreateUserDTO } from "src/users/dto/create-user.dto";
 
@@ -20,5 +21,10 @@ export class BarberController {
   @Get()
   async read() {
     return this.barberService.list();
+  }
+
+  @Get(':id')
+  async readOne(@ParamId() id: string) {
+    return this.barberService.show(id);
   }
 }
