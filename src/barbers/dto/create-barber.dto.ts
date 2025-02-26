@@ -21,4 +21,7 @@ export class CreateBarberDTO {
     minSymbols: 1,
   })
   password: string;
+
+  @IsString()
+  barbershop: string;
 }

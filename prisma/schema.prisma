@@ -27,6 +27,7 @@ model Barber {
   email         String   @unique
   phone         String   @unique
   password      String
+  barbershop    String?
   created_at    DateTime @default(now())
 
   @@map("barbers")
