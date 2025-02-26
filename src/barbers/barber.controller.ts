@@ -11,7 +11,7 @@ import {
 import { BarberService } from "./barber.service";
 import { ParamId } from "src/decorators/param-id.decorator";
 
-import { CreateUserDTO } from "src/users/dto/create-user.dto";
+import { CreateBarberDTO } from "./dto/create-barber.dto";
 import { UpdatePutBarberDTO } from "./dto/update-put-barber.dto";
 import { UpdatePatchBarberDTO } from "./dto/update-patch-barber.dto";
 
@@ -20,7 +20,7 @@ export class BarberController {
   constructor(private readonly barberService: BarberService) {}
 
   @Post()
-  async create(@Body() data: CreateUserDTO) {
+  async create(@Body() data: CreateBarberDTO) {
     return this.barberService.create(data);
   }
 

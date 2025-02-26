@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 
 import { PrismaService } from "src/lib/prisma.service";
 
-import { CreateUserDTO } from "src/users/dto/create-user.dto";
+import { CreateBarberDTO } from "./dto/create-barber.dto";
 import { UpdatePutBarberDTO } from "./dto/update-put-barber.dto";
 import { UpdatePatchBarberDTO } from "./dto/update-patch-barber.dto";
 
@@ -11,7 +11,7 @@ import { UpdatePatchBarberDTO } from "./dto/update-patch-barber.dto";
 export class BarberService {
   constructor(private readonly prisma: PrismaService) {}
   
-  async create(data: CreateUserDTO) {
+  async create(data: CreateBarberDTO) {
     const salt = await bcrypt.genSalt();
   
     data.password = await bcrypt.hash(data.password, salt);
