@@ -1,6 +1,7 @@
 import { 
   Body, 
   Controller, 
+  Delete, 
   Get, 
   Patch, 
   Post, 
@@ -41,5 +42,10 @@ export class BarberController {
   @Patch(':id')
   async updatePartial(@Body() data: UpdatePatchBarberDTO, @ParamId() id: string) {
     return this.barberService.updatePartial(id, data);
+  }
+
+  @Delete(':id')
+  async delete(@ParamId() id: string) {
+    return this.barberService.delete(id);
   }
 }
