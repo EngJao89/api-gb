@@ -61,6 +61,20 @@ export class BarberService {
     });
   }
 
+  async delete(id: string) {
+    const barber = await this.show(id);
+
+    if (!barber) {
+      throw new NotFoundException(`Barber ${id} not found`);
+    }
+
+    return this.prisma.barber.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
   async exists(id: string) {
     if (
       !(await this.prisma.barber.count({
