@@ -64,4 +64,16 @@ export class AuthBarberService {
 
     return this.createToken(ong);
   }
+
+  async forget(email: string) {
+    const ong = await this.prisma.barber.findFirst({
+      where: { email },
+    });
+
+    if (!ong) {
+      throw new UnauthorizedException('Incorrect  email.');
+    }
+
+    return this.createToken(ong);
+  }
 }
