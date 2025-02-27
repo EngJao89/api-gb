@@ -4,6 +4,7 @@ import { AuthBarberService } from "./auth-barber.service";
 import { AuthBarberLoginDto } from "./dto/auth-barber-login.dto";
 import { AuthBarberForgetDto } from "./dto/auth-barber-forget.dto";
 import { AuthBarberResetDto } from "./dto/auth-barber-reset.dto";
+import { AuthBarberRegisterDto } from "./dto/auth-barber-register.dto";
 
 @Controller('auth-barber')
 export class AuthBarberController {
@@ -14,6 +15,11 @@ export class AuthBarberController {
   @Post('login')
   async login(@Body() { email, password }: AuthBarberLoginDto) {
     return await this.authBarberService.login(email, password);
+  }
+
+  @Post('register')
+  async register(@Body() body: AuthBarberRegisterDto) {
+    return this.authBarberService.register(body);
   }
 
   @Post('forget')
