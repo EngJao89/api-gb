@@ -1,10 +1,14 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post, UseGuards } from "@nestjs/common";
 
+import { Barber } from "src/decorators/barber.decorator";
+import { AuthBarberGuard } from "./guard/auth-barber.guard";
 import { AuthBarberService } from "./auth-barber.service";
+
 import { AuthBarberLoginDto } from "./dto/auth-barber-login.dto";
 import { AuthBarberForgetDto } from "./dto/auth-barber-forget.dto";
 import { AuthBarberResetDto } from "./dto/auth-barber-reset.dto";
 import { AuthBarberRegisterDto } from "./dto/auth-barber-register.dto";
+import { BarberData } from "src/interfaces/barber.interface";
 
 @Controller('auth-barber')
 export class AuthBarberController {
@@ -31,4 +35,13 @@ export class AuthBarberController {
   async reset(@Body() { password, token }: AuthBarberResetDto) {
     return this.authBarberService.reset(password, token);
   }
+
+    @UseGuards(AuthBarberGuard)
+    @Post('me')
+    async getPartialData(
+      @Barber(['id', 'name', 'email', 'phone', 'barbershop'])
+      partialData: Partial<BarberData>,
+    ) {
+      return partialData;
+    }
 }

@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from "@nestjs/config";
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -12,7 +14,10 @@ import { UserModule } from './users/user.module';
   imports: [
     AuthBarberModule, 
     AuthUserModule, 
-    BarberModule, 
+    BarberModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     PrismaModule, 
     UserModule
   ],
