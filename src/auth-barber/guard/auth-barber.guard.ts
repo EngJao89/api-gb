@@ -9,7 +9,7 @@ import { AuthBarberService } from '../auth-barber.service';
 import { BarberService } from 'src/barbers/barber.service';
 
 @Injectable()
-export class AuthUserGuard implements CanActivate {
+export class AuthBarberGuard implements CanActivate {
   constructor(
     private readonly authBarberService: AuthBarberService,
     private readonly barberService: BarberService,
