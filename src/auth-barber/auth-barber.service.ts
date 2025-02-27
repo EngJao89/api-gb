@@ -52,28 +52,39 @@ export class AuthBarberService {
   }
 
   async login(email: string, password: string) {
-    const ong = await this.prisma.barber.findFirst({
+    const barber = await this.prisma.barber.findFirst({
       where: { email: email },
     });
 
-    if (!ong || !(await bcrypt.compare(password, ong.password))) {
+    if (!barber || !(await bcrypt.compare(password, barber.password))) {
       throw new UnauthorizedException(
         'Incorrect email or password. Please check your settings',
       );
     }
 
-    return this.createToken(ong);
+    return this.createToken(barber);
   }
 
   async forget(email: string) {
-    const ong = await this.prisma.barber.findFirst({
+    const barber = await this.prisma.barber.findFirst({
       where: { email },
     });
 
-    if (!ong) {
+    if (!barber) {
       throw new UnauthorizedException('Incorrect  email.');
     }
 
-    return this.createToken(ong);
+    return this.createToken(barber);
+  }
+
+  async reset(password: string, token: string) {
+    const id = '';
+
+    const barber = await this.prisma.barber.update({
+      where: { id },
+      data: { password },
+    });
+
+    return this.createToken(barber);
   }
 }
