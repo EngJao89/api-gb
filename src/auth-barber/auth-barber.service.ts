@@ -9,6 +9,7 @@ import * as bcrypt from 'bcrypt';
 
 import { BarberService } from "src/barbers/barber.service";
 import { PrismaService } from "src/lib/prisma.service";
+import { AuthBarberRegisterDto } from "./dto/auth-barber-register.dto";
 
 @Injectable()
 export class AuthBarberService {
@@ -18,7 +19,7 @@ export class AuthBarberService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly prisma: PrismaService,
-    // private readonly barberService: BarberService,
+    private readonly barberService: BarberService,
   ) {}
 
   createToken(barber: Barber) {
@@ -61,6 +62,12 @@ export class AuthBarberService {
         'Incorrect email or password. Please check your settings',
       );
     }
+
+    return this.createToken(barber);
+  }
+
+  async register(data: AuthBarberRegisterDto) {
+    const barber = await this.barberService.create(data);
 
     return this.createToken(barber);
   }
