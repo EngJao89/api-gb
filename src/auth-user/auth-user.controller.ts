@@ -1,22 +1,37 @@
-import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { 
+  BadRequestException, 
+  Body, 
+  Controller, 
+  FileTypeValidator, 
+  MaxFileSizeValidator, 
+  ParseFilePipe, 
+  Post, 
+  UploadedFile, 
+  UseGuards, 
+  UseInterceptors 
+} from "@nestjs/common";
+import { join } from "path";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 import { AuthUserGuard } from "./guard/auth-user.guard";
+import { UserData } from "src/interfaces/user.interface";
 import { User } from "src/decorators/user.decorator";
 
 import { AuthUserService } from "./auth-user.service";
+import { FileService } from "src/file/file.service";
 import { UserService } from "src/users/user.service";
 
 import { AuthUserRegisterDto } from "./dto/auth-user-register.dto";
 import { AuthUserLoginDto } from "./dto/auth-user-login.dto";
 import { AuthUserForgetDto } from "./dto/auth-user-forget.dto";
 import { AuthUserResetDto } from "./dto/auth-user-reset.dto";
-import { UserData } from "src/interfaces/user.interface";
 
 @Controller('auth-user')
 export class AuthUserController {
   constructor(
     private readonly userService: UserService,
     private readonly authUserService: AuthUserService,
+    private readonly fileService: FileService,
   ) {}
 
   @Post('login')
@@ -46,6 +61,39 @@ export class AuthUserController {
     partialData: Partial<UserData>,
   ) {
     return partialData;
+  }
+
+  @UseInterceptors(FileInterceptor('file'))
+  @UseGuards(AuthUserGuard)
+  @Post('photo')
+  async uploadPhoto(
+    @User() user,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new FileTypeValidator({ fileType: 'image/jpeg' }),
+          new MaxFileSizeValidator({ maxSize: 1024 * 1024 }),
+        ],
+      }),
+    )
+    photo: Express.Multer.File,
+  ) {
+    const path = join(
+      __dirname,
+      '../',
+      '..',
+      'storage',
+      'photos',
+      `photo-${user.id}.png`,
+    );
+
+    try {
+      this.fileService.upload(photo, path);
+    } catch (e) {
+      throw new BadRequestException(e);
+    }
+
+    return { success: true };
   }
 
 }
