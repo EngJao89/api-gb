@@ -6,6 +6,7 @@ import { PrismaModule } from "src/lib/prisma.module";
 import { AuthBarberController } from "./auth-barber.controller";
 import { AuthBarberService } from "./auth-barber.service";
 import { BarberModule } from "src/barbers/barber.module";
+import { FileModule } from "src/file/file.module";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { BarberModule } from "src/barbers/barber.module";
     }),
     BarberModule,
     PrismaModule,
+    FileModule,
   ],
   controllers: [AuthBarberController],
   providers: [AuthBarberService],
