@@ -1,11 +1,12 @@
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { AuthUserController } from "./auth-user.controller";
 import { AuthUserService } from "./auth-user.service";
+import { FileModule } from "src/file/file.module";
 import { UserModule } from "src/users/user.module";
 import { PrismaModule } from "src/lib/prisma.module";
-import { ConfigModule, ConfigService } from "@nestjs/config";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
     }),
     UserModule,
     PrismaModule,
+    FileModule
   ],
   controllers: [AuthUserController],
   providers: [AuthUserService],
