@@ -33,6 +33,7 @@ model Barber {
 
   @@map("barbers")
   Scheduling Scheduling[]
+  BarberAvailability BarberAvailability[]
 }
 
 model Scheduling {
@@ -50,4 +51,18 @@ model Scheduling {
   barber        Barber   @relation(fields: [barberId], references: [id])
 
   @@map("schedulings")
+}
+
+model BarberAvailability {
+  id            String   @id @default(uuid())
+  barberId      String
+  dayAt         DateTime
+  startTime     String
+  endTime       String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  barber        Barber   @relation(fields: [barberId], references: [id])
+
+  @@map("barber_availabilities")
 }
