@@ -19,6 +19,7 @@ model User {
   created_at    DateTime @default(now())
 
   @@map("users")
+  Scheduling Scheduling[]
 }
 
 model Barber {
@@ -31,4 +32,22 @@ model Barber {
   created_at    DateTime @default(now())
 
   @@map("barbers")
+  Scheduling Scheduling[]
+}
+
+model Scheduling {
+  id            String   @id @default(uuid())
+  userId        String
+  barberId      String
+  dayAt         DateTime
+  hourAt        String
+  serviceType   String
+  status        String   @default("pending")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user          User     @relation(fields: [userId], references: [id])
+  barber        Barber   @relation(fields: [barberId], references: [id])
+
+  @@map("schedulings")
 }
