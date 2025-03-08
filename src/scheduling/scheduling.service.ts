@@ -12,4 +12,8 @@ export class SchedulingService {
       data,
     })
   }
+
+  async list() {
+    return this.prismaService.scheduling.findMany();
+  }
 }
