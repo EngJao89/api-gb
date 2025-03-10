@@ -16,4 +16,8 @@ export class SchedulingService {
   async list() {
     return this.prismaService.scheduling.findMany();
   }
+
+  async show(id: string) {
+    return this.prismaService.scheduling.findUnique({ where: { id } });
+  }
 }
