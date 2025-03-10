@@ -1,8 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 
 import { PrismaService } from "src/lib/prisma.service";
+
 import { CreateSchedulingDTO } from "./dto/create-scheduling.dto";
 import { UpdatePutSchedulingDTO } from "./dto/update-put-scheduling.dto";
+import { UpdatePatchSchedulingDTO } from "./dto/update-patch-scheduling.dto";
 
 @Injectable()
 export class SchedulingService {
@@ -23,6 +25,17 @@ export class SchedulingService {
   }
 
   async update(id: string, data: UpdatePutSchedulingDTO) {
+    await this.exists(id);
+
+    return this.prismaService.scheduling.update({
+      data,
+      where: {
+        id,
+      },
+    });
+  }
+
+  async updatePartial(id: string, data: UpdatePatchSchedulingDTO) {
     await this.exists(id);
 
     return this.prismaService.scheduling.update({
