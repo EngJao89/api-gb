@@ -46,6 +46,20 @@ export class SchedulingService {
     });
   }
 
+  async delete(id: string) {
+    const scheduling = await this.show(id);
+
+    if (!scheduling) {
+      throw new NotFoundException(`Scheduling ${id} not found`);
+    }
+
+    return this.prismaService.scheduling.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
   async exists(id: string) {
     if (
       !(await this.prismaService.scheduling.count({
