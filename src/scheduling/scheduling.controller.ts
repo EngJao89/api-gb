@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Patch, Post, Put } from "@nestjs/common";
 
 import { ParamId } from "src/decorators/param-id.decorator";
 import { SchedulingService } from "./scheduling.service";
@@ -37,5 +37,10 @@ export class SchedulingController {
     @ParamId() id: string,
   ) {
     return this.schedulingService.updatePartial(id, data);
+  }
+
+  @Delete(':id')
+  async delete(@ParamId() id: string) {
+    return this.schedulingService.delete(id);
   }
 }
