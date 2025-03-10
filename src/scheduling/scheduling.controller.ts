@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Post, Put } from "@nestjs/common";
+import { Body, Controller, Get, Patch, Post, Put } from "@nestjs/common";
 
 import { ParamId } from "src/decorators/param-id.decorator";
 import { SchedulingService } from "./scheduling.service";
 
 import { CreateSchedulingDTO } from "./dto/create-scheduling.dto";
 import { UpdatePutSchedulingDTO } from "./dto/update-put-scheduling.dto";
+import { UpdatePatchSchedulingDTO } from "./dto/update-patch-scheduling.dto";
 
 @Controller('scheduling')
 export class SchedulingController {
@@ -28,5 +29,13 @@ export class SchedulingController {
   @Put(':id')
   async update(@Body() data: UpdatePutSchedulingDTO, @ParamId() id: string) {
     return this.schedulingService.update(id, data);
+  }
+
+  @Patch(':id')
+  async updatePartial(
+    @Body() data: UpdatePatchSchedulingDTO,
+    @ParamId() id: string,
+  ) {
+    return this.schedulingService.updatePartial(id, data);
   }
 }
