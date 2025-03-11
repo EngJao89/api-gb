@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ConfigModule } from "@nestjs/config";
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { AuthBarberModule } from './auth-barber/auth-barber.module';
 import { AuthUserModule } from './auth-user/auth-user.module';
 import { BarberModule } from './barbers/barber.module';
+import { BarberAvailabilityModule } from './barber-availability/barber-availability.module';
 import { PrismaModule } from './lib/prisma.module';
 import { UserModule } from './users/user.module';
 import { SchedulingModule } from './scheduling/scheduling.module';
@@ -16,6 +17,7 @@ import { SchedulingModule } from './scheduling/scheduling.module';
     AuthBarberModule, 
     AuthUserModule, 
     BarberModule,
+    BarberAvailabilityModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
