@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post } from "@nestjs/common";
 import { BarberAvailabilityService } from "./barber-availability.service";
 import { CreateBarberAvailabilityDTO } from "./dto/create-barber-availability.dto";
+import { ParamId } from "src/decorators/param-id.decorator";
 
 @Controller('barber-availability')
 export class BarberAvailabilityController {
@@ -14,5 +15,10 @@ export class BarberAvailabilityController {
   @Get()
   async read() {
     return this.barberAvailabilityService.list();
+  }
+
+  @Get(':id')
+  async readOne(@ParamId() id: string) {
+    return this.barberAvailabilityService.show(id);
   }
 }
