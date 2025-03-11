@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { BarberAvailabilityService } from "./barber-availability.service";
 import { CreateBarberAvailabilityDTO } from "./dto/create-barber-availability.dto";
 
@@ -9,5 +9,10 @@ export class BarberAvailabilityController {
   @Post()
   async create(@Body() data: CreateBarberAvailabilityDTO) {
     return this.barberAvailabilityService.create(data);
+  }
+
+  @Get()
+  async read() {
+    return this.barberAvailabilityService.list();
   }
 }

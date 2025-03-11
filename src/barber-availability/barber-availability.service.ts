@@ -19,4 +19,8 @@ export class BarberAvailabilityService {
       data,
     })
   }
+
+  async list() {
+    return this.prismaService.barberAvailability.findMany();
+  }
 }
