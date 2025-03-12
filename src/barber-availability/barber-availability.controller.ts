@@ -1,7 +1,10 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, Put } from "@nestjs/common";
+
 import { BarberAvailabilityService } from "./barber-availability.service";
-import { CreateBarberAvailabilityDTO } from "./dto/create-barber-availability.dto";
 import { ParamId } from "src/decorators/param-id.decorator";
+
+import { CreateBarberAvailabilityDTO } from "./dto/create-barber-availability.dto";
+import { UpdatePutBarberAvailabilityDTO } from "./dto/update-put-barber-availability.dto";
 
 @Controller('barber-availability')
 export class BarberAvailabilityController {
@@ -20,5 +23,10 @@ export class BarberAvailabilityController {
   @Get(':id')
   async readOne(@ParamId() id: string) {
     return this.barberAvailabilityService.show(id);
+  }
+
+  @Put(':id')
+  async update(@Body() data: UpdatePutBarberAvailabilityDTO, @ParamId() id: string) {
+    return this.barberAvailabilityService.update(id, data);
   }
 }
