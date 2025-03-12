@@ -1,6 +1,6 @@
 import { IsString, IsUUID } from 'class-validator';
 
-export class DeleteSchedulingDTO {
+export class DeleteBarberAvailabilityDTO {
   @IsString()
   @IsUUID()
   id: string;
