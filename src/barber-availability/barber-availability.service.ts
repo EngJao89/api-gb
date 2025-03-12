@@ -1,7 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+
 import { PrismaService } from "src/lib/prisma.service";
+
 import { CreateBarberAvailabilityDTO } from "./dto/create-barber-availability.dto";
 import { UpdatePutBarberAvailabilityDTO } from "./dto/update-put-barber-availability.dto";
+import { UpdatePatchBarberAvailabilityDTO } from "./dto/update-patch-barber-availability.dto";
 
 @Injectable()
 export class BarberAvailabilityService {
@@ -32,6 +35,17 @@ export class BarberAvailabilityService {
   async update(id: string, data: UpdatePutBarberAvailabilityDTO) {
     await this.exists(id);
   
+    return this.prismaService.barberAvailability.update({
+      data,
+      where: {
+        id,
+      },
+    });
+  }
+
+  async updatePartial(id: string, data: UpdatePatchBarberAvailabilityDTO) {
+    await this.exists(id);
+
     return this.prismaService.barberAvailability.update({
       data,
       where: {
