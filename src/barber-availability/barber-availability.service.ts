@@ -54,6 +54,20 @@ export class BarberAvailabilityService {
     });
   }
 
+  async delete(id: string) {
+    const barberAvailability = await this.show(id);
+
+    if (!barberAvailability) {
+      throw new NotFoundException(`Scheduling ${id} not found`);
+    }
+
+    return this.prismaService.barberAvailability.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
   async exists(id: string) {
     if (
       !(await this.prismaService.barberAvailability.count({

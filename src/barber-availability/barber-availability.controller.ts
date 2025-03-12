@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Patch, Post, Put } from "@nestjs/common";
 
 import { BarberAvailabilityService } from "./barber-availability.service";
 import { ParamId } from "src/decorators/param-id.decorator";
@@ -37,5 +37,10 @@ export class BarberAvailabilityController {
     @ParamId() id: string,
   ) {
     return this.barberAvailabilityService.updatePartial(id, data);
+  }
+
+  @Delete(':id')
+  async delete(@ParamId() id: string) {
+    return this.barberAvailabilityService.delete(id);
   }
 }
