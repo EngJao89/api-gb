@@ -1,4 +1,5 @@
 import { IsString, IsUUID, IsDateString, IsNotEmpty } from 'class-validator';
+import { IsFutureDate } from '../../validators/is-future-date.validator';
 
 export class CreateSchedulingDTO {
   @IsUUID()
@@ -11,6 +12,7 @@ export class CreateSchedulingDTO {
 
   @IsDateString()
   @IsNotEmpty()
+  @IsFutureDate({ message: 'A data do agendamento deve ser maior ou igual à data atual' })
   dayAt: Date;
 
   @IsString()

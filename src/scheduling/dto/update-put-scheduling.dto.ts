@@ -1,3 +1,3 @@
-import { CreateSchedulingDTO } from "./create-scheduling.dto";
+import { CreateSchedulingDTO } from './create-scheduling.dto';
 
 export class UpdatePutSchedulingDTO extends CreateSchedulingDTO {}
