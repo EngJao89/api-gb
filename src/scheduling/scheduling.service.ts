@@ -10,23 +10,37 @@ import { UpdatePatchSchedulingDTO } from "./dto/update-patch-scheduling.dto";
 export class SchedulingService {
   constructor( private readonly prismaService: PrismaService ) {}
 
-  private validateDate(date: Date): void {
-    const inputDate = new Date(date);
+  private validateDate(dateString: string): void {
+    const inputDate = new Date(dateString);
     const currentDate = new Date();
 
     currentDate.setHours(0, 0, 0, 0);
     inputDate.setHours(0, 0, 0, 0);
-
+    
     if (inputDate < currentDate) {
       throw new BadRequestException('A data do agendamento deve ser maior ou igual à data atual');
     }
   }
 
+  private combineDateAndTime(dateString: string, timeString: string): Date {
+    const date = new Date(dateString);
+    const [hours, minutes] = timeString.split(':').map(Number);
+    
+    date.setHours(hours, minutes, 0, 0);
+    
+    return date;
+  }
+
   async create (data: CreateSchedulingDTO) {
     this.validateDate(data.dayAt);
-    
+
+    const dayAtDateTime = this.combineDateAndTime(data.dayAt, data.hourAt);
+
     return this.prismaService.scheduling.create({
-      data,
+      data: {
+        ...data,
+        dayAt: dayAtDateTime,
+      },
     })
   }
 
@@ -43,6 +57,10 @@ export class SchedulingService {
     
     if (data.dayAt) {
       this.validateDate(data.dayAt);
+
+      if (data.hourAt) {
+        data.dayAt = this.combineDateAndTime(data.dayAt, data.hourAt) as any;
+      }
     }
 
     return this.prismaService.scheduling.update({
@@ -58,6 +76,10 @@ export class SchedulingService {
     
     if (data.dayAt) {
       this.validateDate(data.dayAt);
+
+      if (data.hourAt) {
+        data.dayAt = this.combineDateAndTime(data.dayAt, data.hourAt) as any;
+      }
     }
 
     return this.prismaService.scheduling.update({
