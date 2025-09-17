@@ -13,7 +13,7 @@ export class CreateSchedulingDTO {
   @IsDateString()
   @IsNotEmpty()
   @IsFutureDate({ message: 'A data do agendamento deve ser maior ou igual à data atual' })
-  dayAt: Date;
+  dayAt: string;
 
   @IsString()
   @IsNotEmpty()

@@ -8,11 +8,15 @@ import {
 
 @ValidatorConstraint({ name: 'isFutureDate', async: false })
 export class IsFutureDateConstraint implements ValidatorConstraintInterface {
-  validate(date: any, args: ValidationArguments) {
-    if (!date) return false;
+  validate(dateString: any, args: ValidationArguments) {
+    if (!dateString) return false;
     
-    const inputDate = new Date(date);
+    const inputDate = new Date(dateString);
     const currentDate = new Date();
+
+    if (isNaN(inputDate.getTime())) {
+      return false;
+    }
 
     currentDate.setHours(0, 0, 0, 0);
     inputDate.setHours(0, 0, 0, 0);
