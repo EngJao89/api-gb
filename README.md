@@ -1,99 +1,200 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# API GoBarber
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API para sistema de agendamento de barbearias desenvolvida com NestJS, PostgreSQL e Docker.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Tecnologias
 
-## Description
+- **NestJS** - Framework Node.js
+- **PostgreSQL** - Banco de dados
+- **Prisma** - ORM
+- **Docker** - Containerização
+- **JWT** - Autenticação
+- **GitHub Actions** - CI/CD
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📋 Pré-requisitos
 
-## Project setup
+- Node.js 22+
+- Docker
+- Docker Compose
+
+## 🛠️ Instalação
+
+### Desenvolvimento Local
 
 ```bash
-$ npm install
+# Clone o repositório
+git clone <repository-url>
+cd api-gb
+
+# Instale as dependências
+npm install
+
+# Configure as variáveis de ambiente
+cp .env.example .env
+
+# Execute as migrações
+npx prisma migrate dev
+
+# Inicie a aplicação
+npm run start:dev
 ```
 
-## Compile and run the project
+### Docker
 
 ```bash
-# development
-$ npm run start
+# Suba os serviços
+docker compose up --build
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# A aplicação estará disponível em http://localhost:3333
 ```
 
-## Run tests
+## 🔧 Variáveis de Ambiente
+
+Crie um arquivo `.env` baseado no `.env.example`:
+
+```env
+# Database
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=GoBarber123
+POSTGRES_DB=nest_db
+DATABASE_URL="postgresql://admin:GoBarber123@localhost:5432/nest_db?schema=public"
+
+# JWT
+JWT_SECRET=your-super-secret-jwt-key-here
+JWT_EXPIRES_IN=7d
+```
+
+## 📚 API Endpoints
+
+### Autenticação
+- `POST /auth-user/login` - Login de usuário
+- `POST /auth-user/register` - Registro de usuário
+- `POST /auth-barber/login` - Login de barbeiro
+- `POST /auth-barber/register` - Registro de barbeiro
+
+### Usuários
+- `GET /users` - Listar usuários
+- `POST /users` - Criar usuário
+- `GET /users/:id` - Buscar usuário
+- `PUT /users/:id` - Atualizar usuário
+- `DELETE /users/:id` - Deletar usuário
+
+### Barbeiros
+- `GET /barbers` - Listar barbeiros
+- `POST /barbers` - Criar barbeiro
+- `GET /barbers/:id` - Buscar barbeiro
+- `PUT /barbers/:id` - Atualizar barbeiro
+- `DELETE /barbers/:id` - Deletar barbeiro
+
+### Agendamentos
+- `GET /scheduling` - Listar agendamentos
+- `POST /scheduling` - Criar agendamento
+- `GET /scheduling/:id` - Buscar agendamento
+- `PUT /scheduling/:id` - Atualizar agendamento
+- `DELETE /scheduling/:id` - Deletar agendamento
+
+### Disponibilidade
+- `GET /barber-availability` - Listar disponibilidades
+- `POST /barber-availability` - Criar disponibilidade
+- `GET /barber-availability/:id` - Buscar disponibilidade
+- `PUT /barber-availability/:id` - Atualizar disponibilidade
+- `DELETE /barber-availability/:id` - Deletar disponibilidade
+
+## 🧪 Testes
 
 ```bash
-# unit tests
-$ npm run test
+# Testes unitários
+npm run test
 
-# e2e tests
-$ npm run test:e2e
+# Testes e2e
+npm run test:e2e
 
-# test coverage
-$ npm run test:cov
+# Cobertura de testes
+npm run test:cov
 ```
 
-## Deployment
+## 🐳 Docker
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### Desenvolvimento
+```bash
+# Subir apenas o banco
+docker compose up postgres -d
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+# Subir aplicação completa
+docker compose up --build
+```
+
+### Produção
+```bash
+# Build da imagem
+docker build -t api-gb .
+
+# Executar container
+docker run -p 3333:3333 api-gb
+```
+
+## 🚀 CI/CD
+
+O projeto inclui pipelines de CI/CD com GitHub Actions:
+
+- **Testes Automáticos** - Executa testes em cada PR
+- **Build Docker** - Constrói e publica imagens
+- **Security Scan** - Verifica vulnerabilidades
+- **Deploy Automático** - Deploy para staging/produção
+
+### Workflows
+
+- `ci-cd.yml` - Pipeline principal
+- `docker-compose-test.yml` - Testes com Docker
+- `security.yml` - Verificações de segurança
+- `deploy.yml` - Deploy automático
+
+## 📊 Monitoramento
+
+- **Health Check**: `GET /` - Status da aplicação
+- **Logs**: Docker logs disponíveis
+- **Métricas**: Prisma query logs
+
+## 🔒 Segurança
+
+- Autenticação JWT
+- Validação de dados com class-validator
+- Criptografia de senhas com bcrypt
+- Headers de segurança
+- Rate limiting (configurável)
+
+## 📝 Scripts Disponíveis
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+npm run build          # Build da aplicação
+npm run start          # Iniciar aplicação
+npm run start:dev      # Iniciar em modo desenvolvimento
+npm run start:debug    # Iniciar em modo debug
+npm run start:prod     # Iniciar em modo produção
+npm run lint           # Executar linter
+npm run format         # Formatar código
+npm run test           # Executar testes
+npm run test:watch     # Executar testes em modo watch
+npm run test:cov       # Executar testes com cobertura
+npm run test:e2e       # Executar testes e2e
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 🤝 Contribuição
 
-## Resources
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
 
-Check out a few resources that may come in handy when working with NestJS:
+## 📄 Licença
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
-## Support
+## 📞 Suporte
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Para suporte, abra uma issue no GitHub ou entre em contato.
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Desenvolvido com ❤️ usando NestJS
