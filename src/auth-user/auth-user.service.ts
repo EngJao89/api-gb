@@ -53,7 +53,7 @@ export class AuthUserService {
     try {
       this.checkToken(token);
       return true;
-    } catch (e) {
+    } catch (_e) {
       return false;
     }
   }
@@ -84,7 +84,7 @@ export class AuthUserService {
     return this.createToken(user);
   }
 
-  async reset(password: string, token: string) {
+  async reset(password: string, _token: string) {
     const id = '';
 
     const user = await this.prisma.user.update({
