@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: api-gobarber
+    plan: free
+    runtime: node
+    buildCommand: npm ci && npx prisma generate && npx prisma migrate deploy
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+    healthCheckPath: /
+    
+  - type: pserv
+    name: gobarber-db
+    plan: free
+    runtime: docker
+    dockerfilePath: ./Dockerfile.postgres
+    envVars:
+      - key: POSTGRES_DB
+        value: gobarber_prod
+      - key: POSTGRES_USER
+        value: gobarber_user
+      - key: POSTGRES_PASSWORD
+        generateValue: true

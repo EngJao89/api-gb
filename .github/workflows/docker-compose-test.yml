@@ -26,19 +26,56 @@ jobs:
 
     - name: Build and test with Docker Compose
       run: |
+        echo "🐳 Starting Docker Compose test..."
+        
+        # Build and start services
         docker compose up --build -d
-        sleep 30  # Wait for services to be ready
+        
+        # Wait for services to be ready with better health check
+        echo "⏳ Waiting for services to be ready..."
+        for i in {1..30}; do
+          if docker compose ps | grep -q "nest_app.*Up"; then
+            echo "✅ App container is running"
+            break
+          fi
+          echo "⏳ Attempt $i/30 - waiting for app..."
+          sleep 2
+        done
+        
+        # Wait for database to be ready
+        echo "⏳ Waiting for database to be ready..."
+        for i in {1..15}; do
+          if docker compose exec -T postgres pg_isready -U admin -d nest_db; then
+            echo "✅ Database is ready"
+            break
+          fi
+          echo "⏳ Attempt $i/15 - waiting for database..."
+          sleep 2
+        done
         
         # Test if the application is running
-        curl -f http://localhost:3333 || exit 1
+        echo "🧪 Testing application health..."
+        for i in {1..10}; do
+          if curl -f http://localhost:3333; then
+            echo "✅ Application is responding"
+            break
+          fi
+          echo "⏳ Attempt $i/10 - testing app health..."
+          sleep 3
+        done
         
         # Test database connection
+        echo "🧪 Testing database connection..."
         docker compose exec -T app npx prisma db push --accept-data-loss
         
         # Run tests inside the container
+        echo "🧪 Running tests..."
         docker compose exec -T app npm run test
         
+        echo "✅ All tests passed!"
+        
         # Cleanup
+        echo "🧹 Cleaning up..."
         docker compose down -v
 
     - name: Upload logs on failure
