@@ -84,7 +84,7 @@ export class AuthBarberService {
     return this.createToken(barber);
   }
 
-  async reset(password: string, token: string) {
+  async reset(password: string, _token: string) {
     const id = '';
 
     const barber = await this.prisma.barber.update({
