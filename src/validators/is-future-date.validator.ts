@@ -8,7 +8,7 @@ import {
 
 @ValidatorConstraint({ name: 'isFutureDate', async: false })
 export class IsFutureDateConstraint implements ValidatorConstraintInterface {
-  validate(dateString: any, args: ValidationArguments) {
+  validate(dateString: any, _args: ValidationArguments) {
     if (!dateString) return false;
     
     const inputDate = new Date(dateString);
@@ -24,7 +24,7 @@ export class IsFutureDateConstraint implements ValidatorConstraintInterface {
     return inputDate >= currentDate;
   }
 
-  defaultMessage(args: ValidationArguments) {
+  defaultMessage(_args: ValidationArguments) {
     return 'A data do agendamento deve ser maior ou igual à data atual';
   }
 }
