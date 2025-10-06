@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:memorydb?mode=memory&cache=shared"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {

@@ -18,7 +18,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "commit": "cz"
+    "commit": "cz",
+    "render:build": "npm ci && npx prisma generate && npx prisma migrate deploy",
+    "render:start": "npm run start:prod"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -80,11 +82,17 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/$1"
+    }
   },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "overrides": {
+    "multer": "^2.0.2"
   }
 }
