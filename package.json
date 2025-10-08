@@ -20,8 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "commit": "cz",
     "render:build": "npm ci && npx prisma generate && npx prisma migrate deploy",
-    "render:start": "npm run start:prod",
-    "postinstall": "npx prisma generate"
+    "render:start": "npm run start:prod"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
