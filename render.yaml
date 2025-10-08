@@ -3,14 +3,24 @@ services:
     name: api-gb
     env: node
     plan: free
-    buildCommand: npm run render:build
-    startCommand: npm run render:start
+    # Use direct Node.js build instead of Docker
+    buildCommand: |
+      npm ci
+      npx prisma generate
+      npx prisma migrate deploy
+      npm run build
+    startCommand: npm run start:prod
     envVars:
       - key: DATABASE_URL
         sync: false
+        # Configure this with your PostgreSQL database URL
+        # Example: postgresql://user:password@host:port/database?schema=public
       - key: JWT_SECRET
         sync: false
+        # Generate a secure random string for JWT signing
       - key: JWT_EXPIRES_IN
         value: 7d
       - key: ALLOWED_ORIGINS
         sync: false
+        # Configure with your frontend domain(s), comma-separated
+        # Example: https://your-frontend.com,https://another-domain.com

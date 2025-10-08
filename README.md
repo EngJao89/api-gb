@@ -154,21 +154,13 @@ JWT_EXPIRES_IN="7d"
 ALLOWED_ORIGINS="https://your-frontend-domain.com"
 ```
 
-## 🚀 CI/CD
+## 🚀 Deploy Direto
 
-O projeto inclui pipelines de CI/CD com GitHub Actions:
+O projeto é configurado para deploy direto no Render sem uso de Docker registries:
 
-- **Testes Automáticos** - Executa testes em cada PR
-- **Build Docker** - Constrói e publica imagens
-- **Security Scan** - Verifica vulnerabilidades
-- **Deploy Automático** - Deploy para staging/produção
-
-### Workflows
-
-- `ci-cd.yml` - Pipeline principal
-- `docker-compose-test.yml` - Testes com Docker
-- `security.yml` - Verificações de segurança
-- `deploy.yml` - Deploy automático
+- **Build Automático** - Render faz build direto do código Node.js
+- **Deploy Automático** - Deploy automático a cada push na main
+- **Configuração Simples** - Sem necessidade de Docker registries
 
 ## 📊 Monitoramento
 
