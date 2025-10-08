@@ -121,6 +121,39 @@ docker build -t api-gb .
 docker run -p 3333:3333 api-gb
 ```
 
+## 🚀 Deploy
+
+### Render.com
+
+Para fazer deploy no Render, siga estes passos:
+
+1. **Conecte seu repositório** ao Render
+2. **Configure as variáveis de ambiente**:
+   - `DATABASE_URL`: URL completa do banco PostgreSQL
+   - `JWT_SECRET`: Chave secreta para JWT
+   - `JWT_EXPIRES_IN`: Tempo de expiração do token (ex: "7d")
+   - `ALLOWED_ORIGINS`: URLs permitidas para CORS (separadas por vírgula)
+   - `PORT`: Porta da aplicação (Render define automaticamente)
+
+3. **Configure o Build Command**:
+   ```bash
+   npm run render:build
+   ```
+
+4. **Configure o Start Command**:
+   ```bash
+   npm run render:start
+   ```
+
+### Variáveis de Ambiente Obrigatórias
+
+```env
+DATABASE_URL="postgresql://username:password@host:port/database?schema=public"
+JWT_SECRET="your-super-secret-jwt-key"
+JWT_EXPIRES_IN="7d"
+ALLOWED_ORIGINS="https://your-frontend-domain.com"
+```
+
 ## 🚀 CI/CD
 
 O projeto inclui pipelines de CI/CD com GitHub Actions:

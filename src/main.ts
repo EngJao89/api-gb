@@ -6,8 +6,10 @@ import { LogInterceptor } from './interceptors/log.interceptors';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000'];
+  
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: allowedOrigins,
     credentials: true,
   });
 
@@ -21,6 +23,7 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new LogInterceptor());
 
-  await app.listen(3333);
+  const port = process.env.PORT || 3333;
+  await app.listen(port);
 }
 bootstrap();
