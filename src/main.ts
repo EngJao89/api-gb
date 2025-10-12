@@ -6,7 +6,7 @@ import { LogInterceptor } from './interceptors/log.interceptors';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000'];
+  const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'http://192.168.100.11:8081'];
   
   app.enableCors({
     origin: allowedOrigins,
