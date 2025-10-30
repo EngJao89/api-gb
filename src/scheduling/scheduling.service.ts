@@ -36,6 +36,17 @@ export class SchedulingService {
 
     const dayAtDateTime = this.combineDateAndTime(data.dayAt, data.hourAt);
 
+    const existingAtSameTime = await this.prismaService.scheduling.findFirst({
+      where: {
+        barberId: data.barberId,
+        dayAt: dayAtDateTime,
+      },
+    });
+
+    if (existingAtSameTime) {
+      throw new BadRequestException('Já existe um agendamento para este barbeiro neste horário.');
+    }
+
     return this.prismaService.scheduling.create({
       data: {
         ...data,
@@ -59,7 +70,21 @@ export class SchedulingService {
       this.validateDate(data.dayAt);
 
       if (data.hourAt) {
-        data.dayAt = this.combineDateAndTime(data.dayAt, data.hourAt) as any;
+        const combined = this.combineDateAndTime(data.dayAt, data.hourAt);
+
+        const conflict = await this.prismaService.scheduling.findFirst({
+          where: {
+            barberId: data.barberId,
+            dayAt: combined,
+            NOT: { id },
+          },
+        });
+
+        if (conflict) {
+          throw new BadRequestException('Já existe um agendamento para este barbeiro neste horário.');
+        }
+
+        data.dayAt = combined as any;
       }
     }
 
@@ -78,7 +103,21 @@ export class SchedulingService {
       this.validateDate(data.dayAt);
 
       if (data.hourAt) {
-        data.dayAt = this.combineDateAndTime(data.dayAt, data.hourAt) as any;
+        const combined = this.combineDateAndTime(data.dayAt, data.hourAt);
+
+        const conflict = await this.prismaService.scheduling.findFirst({
+          where: {
+            barberId: data.barberId,
+            dayAt: combined,
+            NOT: { id },
+          },
+        });
+
+        if (conflict) {
+          throw new BadRequestException('Já existe um agendamento para este barbeiro neste horário.');
+        }
+
+        data.dayAt = combined as any;
       }
     }
 

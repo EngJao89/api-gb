@@ -51,6 +51,7 @@ model Scheduling {
   barber        Barber   @relation(fields: [barberId], references: [id])
 
   @@map("schedulings")
+  @@unique([barberId, dayAt], map: "uniq_schedulings_barber_dayAt")
 }
 
 model BarberAvailability {
