@@ -1,20 +1,21 @@
-import { 
-  Body, 
-  Controller, 
-  Delete, 
-  Get, 
-  Patch, 
-  Post, 
-  Put
-} from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Patch,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
-import { BarberService } from "./barber.service";
-import { ParamId } from "src/decorators/param-id.decorator";
+import { ParamId } from 'src/decorators/param-id.decorator';
+import { BarberService } from './barber.service';
+import { CreateBarberDTO } from './dto/create-barber.dto';
+import { UpdatePutBarberDTO } from './dto/update-put-barber.dto';
+import { UpdatePatchBarberDTO } from './dto/update-patch-barber.dto';
 
-import { CreateBarberDTO } from "./dto/create-barber.dto";
-import { UpdatePutBarberDTO } from "./dto/update-put-barber.dto";
-import { UpdatePatchBarberDTO } from "./dto/update-patch-barber.dto";
-
+@ApiTags('barbers')
 @Controller('barbers')
 export class BarberController {
   constructor(private readonly barberService: BarberService) {}

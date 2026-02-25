@@ -1,12 +1,21 @@
-import { Body, Controller, Delete, Get, Patch, Post, Put } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Patch,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
-import { ParamId } from "src/decorators/param-id.decorator";
-import { SchedulingService } from "./scheduling.service";
+import { ParamId } from 'src/decorators/param-id.decorator';
+import { SchedulingService } from './scheduling.service';
+import { CreateSchedulingDTO } from './dto/create-scheduling.dto';
+import { UpdatePutSchedulingDTO } from './dto/update-put-scheduling.dto';
+import { UpdatePatchSchedulingDTO } from './dto/update-patch-scheduling.dto';
 
-import { CreateSchedulingDTO } from "./dto/create-scheduling.dto";
-import { UpdatePutSchedulingDTO } from "./dto/update-put-scheduling.dto";
-import { UpdatePatchSchedulingDTO } from "./dto/update-patch-scheduling.dto";
-
+@ApiTags('scheduling')
 @Controller('scheduling')
 export class SchedulingController {
   constructor( private readonly schedulingService: SchedulingService ) {}

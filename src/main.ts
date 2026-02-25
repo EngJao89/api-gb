@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { LogInterceptor } from './interceptors/log.interceptors';
 
 async function bootstrap() {
@@ -22,6 +23,18 @@ async function bootstrap() {
   );
 
   app.useGlobalInterceptors(new LogInterceptor());
+
+  const config = new DocumentBuilder()
+    .setTitle('API GB')
+    .setDescription('API da aplicação GB - usuários, barbeiros e agendamentos')
+    .setVersion('0.0.1')
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT', in: 'header' },
+      'JWT',
+    )
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   const port = process.env.PORT || 3333;
   await app.listen(port);
