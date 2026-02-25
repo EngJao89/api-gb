@@ -10,6 +10,13 @@ import { UpdatePatchBarberAvailabilityDTO } from "./dto/update-patch-barber-avai
 export class BarberAvailabilityService {
   constructor( private readonly prismaService: PrismaService ) {}
 
+  private convertDayAtToDateTime(dayAt: Date | string | undefined): Date | undefined {
+    if (!dayAt) return undefined;
+    return typeof dayAt === 'string' 
+      ? new Date(dayAt + 'T00:00:00.000Z')
+      : dayAt;
+  }
+
   async create (data: CreateBarberAvailabilityDTO) {
     const barberExists = await this.prismaService.barber.findUnique({
       where: { id: data.barberId },
@@ -20,7 +27,10 @@ export class BarberAvailabilityService {
     }
 
     return this.prismaService.barberAvailability.create({
-      data,
+      data: {
+        ...data,
+        dayAt: this.convertDayAtToDateTime(data.dayAt) as Date,
+      },
     })
   }
 
@@ -35,8 +45,13 @@ export class BarberAvailabilityService {
   async update(id: string, data: UpdatePutBarberAvailabilityDTO) {
     await this.exists(id);
   
+    const convertedDayAt = this.convertDayAtToDateTime(data.dayAt);
+    const updateData = convertedDayAt 
+      ? { ...data, dayAt: convertedDayAt }
+      : data;
+
     return this.prismaService.barberAvailability.update({
-      data,
+      data: updateData,
       where: {
         id,
       },
@@ -46,8 +61,13 @@ export class BarberAvailabilityService {
   async updatePartial(id: string, data: UpdatePatchBarberAvailabilityDTO) {
     await this.exists(id);
 
+    const convertedDayAt = this.convertDayAtToDateTime(data.dayAt);
+    const updateData = convertedDayAt 
+      ? { ...data, dayAt: convertedDayAt }
+      : data;
+
     return this.prismaService.barberAvailability.update({
-      data,
+      data: updateData,
       where: {
         id,
       },
