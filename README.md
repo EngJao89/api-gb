@@ -112,6 +112,8 @@ docker compose up postgres -d
 docker compose up --build
 ```
 
+**Migrations no host:** para rodar `npx prisma migrate dev` (ou a API) na sua máquina com o Postgres no Docker, use `DATABASE_URL` com **localhost** (ex.: `postgresql://user:pass@localhost:5432/api_gb?schema=public`). O host `postgres` só resolve dentro da rede Docker.
+
 ### Produção
 ```bash
 # Build da imagem
