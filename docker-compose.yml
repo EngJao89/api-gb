@@ -1,3 +1,6 @@
+# Uso:
+#   docker compose up --build          → sobe postgres + app (Swagger em http://localhost:3333/api)
+#   docker compose up postgres -d     → só postgres; rode a API local: npm run start:dev (Swagger no mesmo URL)
 version: '3.8'
 services:
   postgres:
@@ -23,6 +26,7 @@ services:
       DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public"
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+      ALLOWED_ORIGINS: "http://localhost:3000,http://localhost:3333,http://127.0.0.1:3333"
     depends_on:
       - postgres
 

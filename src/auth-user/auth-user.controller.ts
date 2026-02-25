@@ -1,31 +1,31 @@
-import { 
-  BadRequestException, 
-  Body, 
-  Controller, 
-  FileTypeValidator, 
-  MaxFileSizeValidator, 
-  ParseFilePipe, 
-  Post, 
-  UploadedFile, 
-  UseGuards, 
-  UseInterceptors 
-} from "@nestjs/common";
-import { join } from "path";
-import { FileInterceptor } from "@nestjs/platform-express";
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  FileTypeValidator,
+  MaxFileSizeValidator,
+  ParseFilePipe,
+  Post,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiTags } from '@nestjs/swagger';
+import { join } from 'path';
 
-import { AuthUserGuard } from "./guard/auth-user.guard";
-import { UserData } from "src/interfaces/user.interface";
-import { User } from "src/decorators/user.decorator";
+import { User } from 'src/decorators/user.decorator';
+import { FileService } from 'src/file/file.service';
+import { UserData } from 'src/interfaces/user.interface';
+import { UserService } from 'src/users/user.service';
+import { AuthUserGuard } from './guard/auth-user.guard';
+import { AuthUserService } from './auth-user.service';
+import { AuthUserForgetDto } from './dto/auth-user-forget.dto';
+import { AuthUserLoginDto } from './dto/auth-user-login.dto';
+import { AuthUserRegisterDto } from './dto/auth-user-register.dto';
+import { AuthUserResetDto } from './dto/auth-user-reset.dto';
 
-import { AuthUserService } from "./auth-user.service";
-import { FileService } from "src/file/file.service";
-import { UserService } from "src/users/user.service";
-
-import { AuthUserRegisterDto } from "./dto/auth-user-register.dto";
-import { AuthUserLoginDto } from "./dto/auth-user-login.dto";
-import { AuthUserForgetDto } from "./dto/auth-user-forget.dto";
-import { AuthUserResetDto } from "./dto/auth-user-reset.dto";
-
+@ApiTags('auth-user')
 @Controller('auth-user')
 export class AuthUserController {
   constructor(

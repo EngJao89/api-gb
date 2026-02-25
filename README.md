@@ -105,11 +105,14 @@ npm run test:cov
 
 ### Desenvolvimento
 ```bash
-# Subir apenas o banco
+# Subir apenas o banco (API e Swagger rodam na sua máquina)
 docker compose up postgres -d
+npm run start:dev
+# Swagger: http://localhost:3333/api
 
-# Subir aplicação completa
+# Ou subir aplicação completa no Docker (Swagger junto)
 docker compose up --build
+# Swagger: http://localhost:3333/api
 ```
 
 **Migrations no host:** para rodar `npx prisma migrate dev` (ou a API) na sua máquina com o Postgres no Docker, use `DATABASE_URL` com **localhost** (ex.: `postgresql://user:pass@localhost:5432/api_gb?schema=public`). O host `postgres` só resolve dentro da rede Docker.

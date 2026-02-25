@@ -1,18 +1,30 @@
-import { BadRequestException, Body, Controller, FileTypeValidator, MaxFileSizeValidator, ParseFilePipe, Post, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  FileTypeValidator,
+  MaxFileSizeValidator,
+  ParseFilePipe,
+  Post,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiTags } from '@nestjs/swagger';
+import { join } from 'path';
 
-import { Barber } from "src/decorators/barber.decorator";
-import { AuthBarberGuard } from "./guard/auth-barber.guard";
-import { AuthBarberService } from "./auth-barber.service";
-import { FileService } from "src/file/file.service";
-import { BarberData } from "src/interfaces/barber.interface";
+import { Barber } from 'src/decorators/barber.decorator';
+import { FileService } from 'src/file/file.service';
+import { BarberData } from 'src/interfaces/barber.interface';
+import { AuthBarberGuard } from './guard/auth-barber.guard';
+import { AuthBarberService } from './auth-barber.service';
+import { AuthBarberForgetDto } from './dto/auth-barber-forget.dto';
+import { AuthBarberLoginDto } from './dto/auth-barber-login.dto';
+import { AuthBarberRegisterDto } from './dto/auth-barber-register.dto';
+import { AuthBarberResetDto } from './dto/auth-barber-reset.dto';
 
-import { AuthBarberLoginDto } from "./dto/auth-barber-login.dto";
-import { AuthBarberForgetDto } from "./dto/auth-barber-forget.dto";
-import { AuthBarberResetDto } from "./dto/auth-barber-reset.dto";
-import { AuthBarberRegisterDto } from "./dto/auth-barber-register.dto";
-import { FileInterceptor } from "@nestjs/platform-express";
-import { join } from "path";
-
+@ApiTags('auth-barber')
 @Controller('auth-barber')
 export class AuthBarberController {
   constructor(
